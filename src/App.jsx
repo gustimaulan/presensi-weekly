@@ -7,7 +7,9 @@ function App() {
 
   return (
     <>
+      <div className='bg-white'>
       <Presensi />
+      </div>
     </>
   )
 }
