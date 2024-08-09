@@ -4,7 +4,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEET_ID;
 const RANGE = 'Presensi_View!A1:E';
 
-const Table = () => {
+const Presensi = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -126,4 +126,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default Presensi;
