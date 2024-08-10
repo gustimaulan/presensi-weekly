@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import SkeletonTable from './SkeletonTable'; // Import the SkeletonTable component
 
 const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEET_ID;
-const RANGE = 'Presensi_View!A1:E';
+const RANGE = 'Presensi_VIew!A1:E';
 
 const Table = () => {
   const [data, setData] = useState([]);
@@ -77,7 +78,7 @@ const Table = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold my-4 text-center">Data Presensi</h1>
+      <h1 className="text-2xl font-bold my-4 text-center">Google Sheets Data</h1>
 
       <div className="mb-4">
         <input
@@ -91,48 +92,52 @@ const Table = () => {
 
       <div className="overflow-x-auto">
         {loading ? (
-          <div className="text-center py-10 text-xl font-semibold">
-            Loading Data...
-          </div>
+          <SkeletonTable />
         ) : (
-          <div>
-            <table className="min-w-full bg-white border border-gray-300">
-              <thead>
-                <tr className="bg-[#2C9CDA] text-white uppercase text-sm leading-normal">
-                  {Array.isArray(data[0]) && data[0].map((header, index) => (
-                    <th
-                      key={index}
-                      className="py-3 px-6 text-left cursor-pointer"
-                      onClick={() => handleSort(index)}
-                    >
-                      <div className="flex items-center">
-                        {header}
-                        {sortConfig.key === index && (
-                          <span className="ml-2">
-                            {sortConfig.direction === 'ascending' ? '▲' : '▼'}
-                          </span>
-                        )}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {filteredData.map((row, rowIndex) => (
-                  <tr
-                    key={rowIndex}
-                    className={`${rowIndex % 2 === 0 ? 'bg-[#E6F3FA]' : 'bg-white'} border-b border-gray-200 hover:bg-gray-100`}
-                  >
-                    {row.map((cell, cellIndex) => (
-                      <td key={cellIndex} className="py-3 px-6 text-left whitespace-nowrap">
-                        {cell}
-                      </td>
+          <>
+            {filteredData.length === 0 ? (
+              <div className="text-center py-10 text-xl font-semibold">
+                No data found.
+              </div>
+            ) : (
+              <table className="min-w-full bg-white border border-gray-300">
+                <thead>
+                  <tr className="bg-[#2C9CDA] text-white uppercase text-sm leading-normal">
+                    {Array.isArray(data[0]) && data[0].map((header, index) => (
+                      <th
+                        key={index}
+                        className="py-3 px-6 text-left cursor-pointer"
+                        onClick={() => handleSort(index)}
+                      >
+                        <div className="flex items-center">
+                          {header}
+                          {sortConfig.key === index && (
+                            <span className="ml-2">
+                              {sortConfig.direction === 'ascending' ? '▲' : '▼'}
+                            </span>
+                          )}
+                        </div>
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="text-gray-600 text-sm font-light">
+                  {filteredData.map((row, rowIndex) => (
+                    <tr
+                      key={rowIndex}
+                      className={`${rowIndex % 2 === 0 ? 'bg-[#E6F3FA]' : 'bg-white'} border-b border-gray-200 hover:bg-gray-100`}
+                    >
+                      {row.map((cell, cellIndex) => (
+                        <td key={cellIndex} className="py-3 px-6 text-left whitespace-nowrap">
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </>
         )}
       </div>
     </div>
