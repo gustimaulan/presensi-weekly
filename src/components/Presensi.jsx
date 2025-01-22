@@ -23,14 +23,14 @@ const Table = () => {
 
         if (result.values && result.values.length > 0) {
           setData(result.values);
-          // Leave filteredData empty until the user types something
+          // Keep filteredData empty until a search term is entered
         } else {
           console.log('No data found.');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false);
+         setLoading(false);
       }
     };
 
@@ -39,8 +39,7 @@ const Table = () => {
 
   useEffect(() => {
     if (!searchTerm) {
-      // Empty filteredData if searchTerm is empty
-      setFilteredData([]);
+      setFilteredData([]); // Clear filtered data if searchTerm is empty
       return;
     }
 

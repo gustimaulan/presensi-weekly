@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SkeletonTable = () => {
-  const skeletonRows = Array(5).fill(null); // Adjust the number of skeleton rows
+  const skeletonRows = Array(20).fill(null); // Adjust the number of skeleton rows
 
   return (
     <div className="overflow-x-auto">
