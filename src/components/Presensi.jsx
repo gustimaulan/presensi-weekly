@@ -23,7 +23,7 @@ const Table = () => {
 
         if (result.values && result.values.length > 0) {
           setData(result.values);
-          setFilteredData(result.values.slice(1));
+          // Leave filteredData empty until the user types something
         } else {
           console.log('No data found.');
         }
@@ -38,13 +38,16 @@ const Table = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = data.slice(1); // Skip header row
-
-    if (searchTerm) {
-      filtered = filtered.filter(row =>
-        row.some(cell => cell.toString().toLowerCase().includes(searchTerm.toLowerCase()))
-      );
+    if (!searchTerm) {
+      // Empty filteredData if searchTerm is empty
+      setFilteredData([]);
+      return;
     }
+
+    let filtered = data.slice(1); // Skip header row
+    filtered = filtered.filter(row =>
+      row.some(cell => cell.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+    );
 
     if (sortConfig.key !== null) {
       filtered.sort((a, b) => {
@@ -78,12 +81,12 @@ const Table = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold my-4 text-center">Presensi Data</h1>
+      <h1 className="text-2xl font-bold my-4 text-center">Presence Data</h1>
 
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Type your name..."
           className="p-2 border rounded w-full"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,9 +98,13 @@ const Table = () => {
           <SkeletonTable />
         ) : (
           <>
-            {filteredData.length === 0 ? (
+            {!searchTerm ? (
               <div className="text-center py-10 text-xl font-semibold">
-                No data found.
+                Please type your name to search.
+              </div>
+            ) : filteredData.length === 0 ? (
+              <div className="text-center py-10 text-xl font-semibold">
+                No data found, make sure you have submitted your presence.
               </div>
             ) : (
               <table className="min-w-full bg-white border border-gray-300">
