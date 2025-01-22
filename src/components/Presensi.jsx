@@ -100,7 +100,7 @@ const Table = () => {
           <>
             {!searchTerm ? (
               <div className="text-center py-10 text-xl font-semibold">
-                Please type your name to search.
+                Please type to search.
               </div>
             ) : filteredData.length === 0 ? (
               <div className="text-center py-10 text-xl font-semibold">
