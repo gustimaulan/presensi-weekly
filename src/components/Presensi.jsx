@@ -86,7 +86,7 @@ const Table = () => {
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Type your name..."
+          placeholder="Type your name or your student's name..."
           className="p-2 border rounded w-full"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
